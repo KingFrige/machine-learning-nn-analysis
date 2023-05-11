@@ -4,7 +4,7 @@
 
 ## stale diffusion
 
-| tasks                              | achiever  |
+| tasks                              | status    |
 |------------------------------------|-----------|
 | <ul><li>[ ] 场景分析</li></ul>     |           |
 | <ul><li>[ ] 算子分析</li></ul>     |           |
@@ -13,7 +13,7 @@
 
 ### GPT-2
 
-| tasks                              | achiever  |
+| tasks                              | status    |
 |------------------------------------|-----------|
 | <ul><li>[ ] 场景分析</li></ul>     |           |
 | <ul><li>[ ] 算子分析</li></ul>     |           |
