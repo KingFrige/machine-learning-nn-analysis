@@ -25,13 +25,26 @@
 
 > 确认算子种类-频度
 
+### reference code
+
 - [stable-diffusion-tensorflow](https://github.com/divamgupta/stable-diffusion-tensorflow)
 - [stable-diffusion-pytorch](https://github.com/kjsman/stable-diffusion-pytorch)
 - Diffusion Transformer
 
+### 原理 
+
+1. [The Illustrated Stable Diffusion](https://jalammar.github.io/illustrated-stable-diffusion/)
+1. [译-The Illustrated Stable Diffusion](https://zhuanlan.zhihu.com/p/593993017)
+1. [文生图模型之Stable Diffusion](https://zhuanlan.zhihu.com/p/617134893)
+1. [Stable Diffusion 原理介绍与源码分析](https://zhuanlan.zhihu.com/p/613337342)
+
 ## 网络分析
 
 > 确认权重参数大小，网络结构，带宽-sram考量
+
+- 参数
+
+  1. [Stable Diffusion模型运算量分析](https://blog.csdn.net/luoyu510183/article/details/127695184)
 
 ## 部署
 
@@ -39,12 +52,11 @@
 
 - 模型
 
-[Stable Diffusion Models](https://cyberes.github.io/stable-diffusion-models)
+  1. [Stable Diffusion Models](https://cyberes.github.io/stable-diffusion-models)
+  1. [Stable Diffusion的模型量化](https://zhuanlan.zhihu.com/p/571964820)
 
 - 框架
 - 硬件
-
-<div STYLE="page-break-after: always;"></div>
 
 ## reference
 
@@ -60,6 +72,6 @@
 1. [Stable Diffusion 原理介绍与源码分析](https://blog.csdn.net/Eric_1993/article/details/129393890)
 1. [使用Stable Diffusion UI手册](https://zhuanlan.zhihu.com/p/570954565)
 1. [Stable Diffusion的十个脑洞](https://zhuanlan.zhihu.com/p/571808038)
-
+1. [Colossal-AI](https://github.com/hpcaitech/ColossalAI)
 
 --------------------------------------------------------------------------------------------------------------------

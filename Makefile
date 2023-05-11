@@ -1,6 +1,6 @@
 default:doc
 
-MDFILES = src/stable-diffusion/README.md src/GTP-2/README.md
+MDFILES = src/stable-diffusion/README.md src/GPT-2/README.md
 PDF = dist/machine-learning-nn-analysis.pdf
 HTML = dist/machine-learning-nn-analysis.html
 
