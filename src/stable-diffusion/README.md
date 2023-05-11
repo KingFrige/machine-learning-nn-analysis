@@ -44,6 +44,8 @@
 - 框架
 - 硬件
 
+<div STYLE="page-break-after: always;"></div>
+
 ## reference
 
 1. [Open-Assistant](https://github.com/LAION-AI/Open-Assistant)
@@ -58,3 +60,6 @@
 1. [Stable Diffusion 原理介绍与源码分析](https://blog.csdn.net/Eric_1993/article/details/129393890)
 1. [使用Stable Diffusion UI手册](https://zhuanlan.zhihu.com/p/570954565)
 1. [Stable Diffusion的十个脑洞](https://zhuanlan.zhihu.com/p/571808038)
+
+
+--------------------------------------------------------------------------------------------------------------------
