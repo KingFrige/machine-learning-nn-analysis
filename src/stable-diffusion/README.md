@@ -6,6 +6,8 @@
 - [模型v1-2](https://huggingface.co/CompVis/stable-diffusion-v1-2)
   [模型v1-4](https://huggingface.co/CompVis/stable-diffusion-v1-4/tree/main/safety_checker)
 
+
+
 ## 场景分析
 
 > 用户层使用模式，最好能用开源的网站试试，了解输入状况，场景状态
@@ -19,17 +21,17 @@
 
 ### demo
 
-[本地部署和配置](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
+- [本地部署和配置](https://github.com/AUTOMATIC1111/stable-diffusion-webui)
+
+  * install
+  * usage
+
+
+
 
 ## 算子分析
 
 > 确认算子种类-频度
-
-### reference code
-
-- [stable-diffusion-tensorflow](https://github.com/divamgupta/stable-diffusion-tensorflow)
-- [stable-diffusion-pytorch](https://github.com/kjsman/stable-diffusion-pytorch)
-- Diffusion Transformer
 
 ### 原理 
 
@@ -38,26 +40,60 @@
 1. [文生图模型之Stable Diffusion](https://zhuanlan.zhihu.com/p/617134893)
 1. [Stable Diffusion 原理介绍与源码分析](https://zhuanlan.zhihu.com/p/613337342)
 
+### reference code
+
+- [stable-diffusion-tensorflow](https://github.com/divamgupta/stable-diffusion-tensorflow)
+- [stable-diffusion-pytorch](https://github.com/kjsman/stable-diffusion-pytorch)
+- Diffusion Transformer
+
+### 算子类型
+
+### 算子频度
+
+
+
+
+
 ## 网络分析
 
 > 确认权重参数大小，网络结构，带宽-sram考量
 
-- 参数
+### 参数
 
   1. [Stable Diffusion模型运算量分析](https://blog.csdn.net/luoyu510183/article/details/127695184)
   1. [onnx-tool](https://github.com/ThanatosShinji/onnx-tool)
+
+### 网络结构
+
+### ifm sram
+
+### 带宽
+
+
+
 
 ## 部署
 
 > 量化细节，数据类型...
 
-- 模型
+### 模型
 
   1. [Stable Diffusion Models](https://cyberes.github.io/stable-diffusion-models)
   1. [Stable Diffusion的模型量化](https://zhuanlan.zhihu.com/p/571964820)
 
-- 框架
-- 硬件
+### 框架
+
+  * pytorch
+  * tensorflow
+
+### 硬件
+
+  * CUDA
+  * cpu
+
+### 量化
+
+## benchmark
 
 ## reference
 
