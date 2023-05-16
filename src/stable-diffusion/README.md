@@ -105,7 +105,9 @@
 
   * CUDA
   * cpu
-  * PPA
+  * tensor engine
+
+### PPA
 
 ## benchmark
 
