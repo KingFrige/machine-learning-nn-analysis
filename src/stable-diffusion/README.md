@@ -75,8 +75,6 @@
   1. [Stable Diffusion模型运算量分析](https://blog.csdn.net/luoyu510183/article/details/127695184)
   1. [onnx-tool](https://github.com/ThanatosShinji/onnx-tool)
 
-### 网络结构
-
 ### ifm sram
 
 ### 带宽
