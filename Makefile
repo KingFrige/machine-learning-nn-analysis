@@ -1,4 +1,4 @@
-default:doc
+default:html
 
 MDFILES = src/stable-diffusion/README.md src/GPT-2/README.md
 PDF = dist/machine-learning-nn-analysis.pdf
@@ -12,7 +12,10 @@ pdf:
 html:
 	pandoc -s --toc --self-contained --metadata pagetitle="machine-learning-nn-analysis" $(MDFILES) -o $(HTML)
 
-view:
+view-html:
+	firefox $(HTML)
+
+view-pdf:
 	firefox $(PDF)
 
 clean:
