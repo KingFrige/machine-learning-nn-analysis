@@ -17,3 +17,10 @@
   * usage
 
 ### 推理硬件需求
+
+1. [L4](https://www.nvidia.com/en-us/data-center/l4/)
+1. 内存 >= 64G
+1. 显卡 >= 10G
+1. FP8
+1. [NVLink](https://www.nvidia.cn/design-visualization/nvlink-bridges) connect
+1. GPUs cluster
