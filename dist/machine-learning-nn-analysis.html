@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>machine-learning-nn-analysis</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<nav id="TOC">
+<ul>
+<li><a href="#stable-diffusion">stable-diffusion</a><ul>
+<li><a href="#场景分析">场景分析</a><ul>
+<li><a href="#应用场景">应用场景</a></li>
+<li><a href="#demo">demo</a></li>
+<li><a href="#推理硬件需求">推理硬件需求</a></li>
+</ul></li>
+<li><a href="#算子分析">算子分析</a><ul>
+<li><a href="#原理">原理</a></li>
+<li><a href="#reference-code">reference code</a></li>
+<li><a href="#算子类型">算子类型</a></li>
+<li><a href="#算子频度">算子频度</a></li>
+</ul></li>
+<li><a href="#网络分析">网络分析</a><ul>
+<li><a href="#结构">结构</a></li>
+<li><a href="#参数">参数</a></li>
+<li><a href="#ifm-sram">ifm sram</a></li>
+<li><a href="#带宽">带宽</a></li>
+</ul></li>
+<li><a href="#部署">部署</a><ul>
+<li><a href="#模型">模型</a></li>
+<li><a href="#框架">框架</a></li>
+<li><a href="#量化">量化</a></li>
+<li><a href="#硬件">硬件</a></li>
+<li><a href="#ppa">PPA</a></li>
+</ul></li>
+<li><a href="#benchmark">benchmark</a></li>
+<li><a href="#reference">reference</a></li>
+</ul></li>
+<li><a href="#swin-transformer">swin transformer</a><ul>
+<li><a href="#场景分析-1">场景分析</a><ul>
+<li><a href="#应用场景-1">应用场景</a></li>
+<li><a href="#demo-1">demo</a></li>
+<li><a href="#推理硬件需求-1">推理硬件需求</a></li>
+</ul></li>
+<li><a href="#算子分析-1">算子分析</a><ul>
+<li><a href="#原理-1">原理</a></li>
+<li><a href="#reference-code-1">reference code</a></li>
+<li><a href="#算子类型-1">算子类型</a></li>
+<li><a href="#算子频度-1">算子频度</a></li>
+</ul></li>
+<li><a href="#网络分析-1">网络分析</a><ul>
+<li><a href="#结构-1">结构</a></li>
+<li><a href="#参数-1">参数</a></li>
+<li><a href="#ifm-sram-1">ifm sram</a></li>
+<li><a href="#带宽-1">带宽</a></li>
+</ul></li>
+<li><a href="#部署-1">部署</a><ul>
+<li><a href="#模型-1">模型</a></li>
+<li><a href="#框架-1">框架</a></li>
+<li><a href="#量化-1">量化</a></li>
+<li><a href="#硬件-1">硬件</a></li>
+<li><a href="#ppa-1">PPA</a></li>
+</ul></li>
+<li><a href="#benchmark-1">benchmark</a></li>
+<li><a href="#reference-1">reference</a></li>
+</ul></li>
+<li><a href="#gpt-2">GPT-2</a><ul>
+<li><a href="#场景分析-2">场景分析</a><ul>
+<li><a href="#应用场景-2">应用场景</a></li>
+<li><a href="#demo-2">demo</a></li>
+<li><a href="#推理硬件需求-2">推理硬件需求</a></li>
+</ul></li>
+<li><a href="#算子分析-2">算子分析</a></li>
+<li><a href="#网络分析-2">网络分析</a></li>
+<li><a href="#部署-2">部署</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="stable-diffusion">stable-diffusion</h1>
+<ul>
+<li><a href="https://ommer-lab.com/research/latent-diffusion-models">官网</a></li>
+<li><a href="https://arxiv.org/abs/2112.10752">论文</a></li>
+<li><a href="https://github.com/CompVis/stable-diffusion">Github地址</a></li>
+<li><a href="https://huggingface.co/CompVis/stable-diffusion-v1-2">模型v1-2</a> <a href="https://huggingface.co/CompVis/stable-diffusion-v1-4/tree/main/safety_checker">模型v1-4</a></li>
+</ul>
+<h2 id="场景分析">场景分析</h2>
+<blockquote>
+<p>用户层使用模式，最好能用开源的网站试试，了解输入状况，场景状态</p>
+</blockquote>
+<h3 id="应用场景">应用场景</h3>
+<ol type="1">
+<li><a href="https://stable-diffusion-book.vercel.app/">AiDraw</a></li>
+<li><a href="https://civitai.com/images">civitai</a></li>
+<li><a href="https://github.com/hua1995116/awesome-ai-painting">数字绘画</a></li>
+<li><a href="https://openart.ai/">openart.ai</a></li>
+</ol>
+<h3 id="demo">demo</h3>
+<ul>
+<li><p><a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">本地部署和配置</a></p>
+<ul>
+<li>install</li>
+<li>usage</li>
+</ul></li>
+</ul>
+<h3 id="推理硬件需求">推理硬件需求</h3>
+<h2 id="算子分析">算子分析</h2>
+<blockquote>
+<p>确认算子种类-频度</p>
+</blockquote>
+<h3 id="原理">原理</h3>
+<ol type="1">
+<li><a href="https://jalammar.github.io/illustrated-stable-diffusion/">The Illustrated Stable Diffusion</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/593993017">译-The Illustrated Stable Diffusion</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/617134893">文生图模型之Stable Diffusion</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/613337342">Stable Diffusion 原理介绍与源码分析</a></li>
+<li><a href="https://github.com/ekagra-ranjan/huggingface-blog/blob/main/stable_diffusion.md#how-does-stable-diffusion-work">How does Stable Diffusion work?</a></li>
+</ol>
+<h3 id="reference-code">reference code</h3>
+<ul>
+<li><a href="https://github.com/divamgupta/stable-diffusion-tensorflow">stable-diffusion-tensorflow</a></li>
+<li><a href="https://github.com/kjsman/stable-diffusion-pytorch">stable-diffusion-pytorch</a></li>
+<li>Diffusion Transformer</li>
+</ul>
+<h3 id="算子类型">算子类型</h3>
+<h3 id="算子频度">算子频度</h3>
+<h2 id="网络分析">网络分析</h2>
+<blockquote>
+<p>确认权重参数大小，网络结构，带宽-sram考量</p>
+</blockquote>
+<h3 id="结构">结构</h3>
+<ul>
+<li>CLIP</li>
+<li>Encoder</li>
+<li>Decoder</li>
+<li><p>Diffusion</p>
+<ul>
+<li>UNet</li>
+<li>TimeEmbedding</li>
+</ul></li>
+</ul>
+<h3 id="参数">参数</h3>
+<ol type="1">
+<li><a href="https://blog.csdn.net/luoyu510183/article/details/127695184">Stable Diffusion模型运算量分析</a></li>
+<li><a href="https://github.com/ThanatosShinji/onnx-tool">onnx-tool</a></li>
+</ol>
+<h3 id="ifm-sram">ifm sram</h3>
+<h3 id="带宽">带宽</h3>
+<h2 id="部署">部署</h2>
+<blockquote>
+<p>量化细节，数据类型…</p>
+</blockquote>
+<h3 id="模型">模型</h3>
+<ol type="1">
+<li><a href="https://cyberes.github.io/stable-diffusion-models">Stable Diffusion Models</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/571964820">Stable Diffusion的模型量化</a></li>
+</ol>
+<h3 id="框架">框架</h3>
+<ul>
+<li>pytorch</li>
+<li>tensorflow</li>
+</ul>
+<h3 id="量化">量化</h3>
+<h3 id="硬件">硬件</h3>
+<ul>
+<li>CUDA</li>
+<li>cpu</li>
+<li>tensor engine</li>
+</ul>
+<h3 id="ppa">PPA</h3>
+<h2 id="benchmark">benchmark</h2>
+<h2 id="reference">reference</h2>
+<ol type="1">
+<li><a href="https://github.com/LAION-AI/Open-Assistant">Open-Assistant</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/563731965">stable diffusion安装与简单评测</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/598999843">35张图，直观理解Stable Diffusion</a></li>
+<li><a href="https://stability.ai/">stability</a></li>
+<li><a href="https://github.com/lucidrains/denoising-diffusion-pytorch">denoising-diffusion-pytorch</a></li>
+<li><a href="https://github.com/lllyasviel/ControlNet">ControlNet</a></li>
+<li><a href="https://github.com/Mikubill/sd-webui-controlnet">sd-webui-controlnet</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/560226367">AI数字绘画 stable-diffusion 保姆级教程</a></li>
+<li><a href="https://github.com/camenduru/stable-diffusion-webui-colab">stable-diffusion-webui-colab</a></li>
+<li><a href="https://blog.csdn.net/Eric_1993/article/details/129393890">Stable Diffusion 原理介绍与源码分析</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/570954565">使用Stable Diffusion UI手册</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/571808038">Stable Diffusion的十个脑洞</a></li>
+<li><a href="https://github.com/hpcaitech/ColossalAI">Colossal-AI</a></li>
+</ol>
+<hr />
+<h1 id="swin-transformer">swin transformer</h1>
+<ul>
+<li><a href="https://ommer-lab.com/research/latent-diffusion-models">官网</a></li>
+<li><a href="https://arxiv.org/abs/2112.10752">论文</a></li>
+<li><a href="https://github.com/CompVis/stable-diffusion">Github地址</a></li>
+<li><a href="https://huggingface.co/CompVis/stable-diffusion-v1-2">模型v1-2</a> <a href="https://huggingface.co/CompVis/stable-diffusion-v1-4/tree/main/safety_checker">模型v1-4</a></li>
+</ul>
+<h2 id="场景分析-1">场景分析</h2>
+<blockquote>
+<p>用户层使用模式，最好能用开源的网站试试，了解输入状况，场景状态</p>
+</blockquote>
+<h3 id="应用场景-1">应用场景</h3>
+<ol type="1">
+<li><a href="https://stable-diffusion-book.vercel.app/">AiDraw</a></li>
+<li><a href="https://civitai.com/images">civitai</a></li>
+<li><a href="https://github.com/hua1995116/awesome-ai-painting">数字绘画</a></li>
+<li><a href="https://openart.ai/">openart.ai</a></li>
+</ol>
+<h3 id="demo-1">demo</h3>
+<ul>
+<li><p><a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">本地部署和配置</a></p>
+<ul>
+<li>install</li>
+<li>usage</li>
+</ul></li>
+</ul>
+<h3 id="推理硬件需求-1">推理硬件需求</h3>
+<h2 id="算子分析-1">算子分析</h2>
+<blockquote>
+<p>确认算子种类-频度</p>
+</blockquote>
+<h3 id="原理-1">原理</h3>
+<ol type="1">
+<li><a href="https://jalammar.github.io/illustrated-stable-diffusion/">The Illustrated Stable Diffusion</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/593993017">译-The Illustrated Stable Diffusion</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/617134893">文生图模型之Stable Diffusion</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/613337342">Stable Diffusion 原理介绍与源码分析</a></li>
+<li><a href="https://github.com/ekagra-ranjan/huggingface-blog/blob/main/stable_diffusion.md#how-does-stable-diffusion-work">How does Stable Diffusion work?</a></li>
+</ol>
+<h3 id="reference-code-1">reference code</h3>
+<ul>
+<li><a href="https://github.com/divamgupta/stable-diffusion-tensorflow">stable-diffusion-tensorflow</a></li>
+<li><a href="https://github.com/kjsman/stable-diffusion-pytorch">stable-diffusion-pytorch</a></li>
+<li>Diffusion Transformer</li>
+</ul>
+<h3 id="算子类型-1">算子类型</h3>
+<h3 id="算子频度-1">算子频度</h3>
+<h2 id="网络分析-1">网络分析</h2>
+<blockquote>
+<p>确认权重参数大小，网络结构，带宽-sram考量</p>
+</blockquote>
+<h3 id="结构-1">结构</h3>
+<ul>
+<li>CLIP</li>
+<li>Encoder</li>
+<li>Decoder</li>
+<li><p>Diffusion</p>
+<ul>
+<li>UNet</li>
+<li>TimeEmbedding</li>
+</ul></li>
+</ul>
+<h3 id="参数-1">参数</h3>
+<ol type="1">
+<li><a href="https://blog.csdn.net/luoyu510183/article/details/127695184">Stable Diffusion模型运算量分析</a></li>
+<li><a href="https://github.com/ThanatosShinji/onnx-tool">onnx-tool</a></li>
+</ol>
+<h3 id="ifm-sram-1">ifm sram</h3>
+<h3 id="带宽-1">带宽</h3>
+<h2 id="部署-1">部署</h2>
+<blockquote>
+<p>量化细节，数据类型…</p>
+</blockquote>
+<h3 id="模型-1">模型</h3>
+<ol type="1">
+<li><a href="https://cyberes.github.io/stable-diffusion-models">Stable Diffusion Models</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/571964820">Stable Diffusion的模型量化</a></li>
+</ol>
+<h3 id="框架-1">框架</h3>
+<ul>
+<li>pytorch</li>
+<li>tensorflow</li>
+</ul>
+<h3 id="量化-1">量化</h3>
+<h3 id="硬件-1">硬件</h3>
+<ul>
+<li>CUDA</li>
+<li>cpu</li>
+<li>tensor engine</li>
+</ul>
+<h3 id="ppa-1">PPA</h3>
+<h2 id="benchmark-1">benchmark</h2>
+<h2 id="reference-1">reference</h2>
+<ol type="1">
+<li><a href="https://github.com/LAION-AI/Open-Assistant">Open-Assistant</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/563731965">stable diffusion安装与简单评测</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/598999843">35张图，直观理解Stable Diffusion</a></li>
+<li><a href="https://stability.ai/">stability</a></li>
+<li><a href="https://github.com/lucidrains/denoising-diffusion-pytorch">denoising-diffusion-pytorch</a></li>
+<li><a href="https://github.com/lllyasviel/ControlNet">ControlNet</a></li>
+<li><a href="https://github.com/Mikubill/sd-webui-controlnet">sd-webui-controlnet</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/560226367">AI数字绘画 stable-diffusion 保姆级教程</a></li>
+<li><a href="https://github.com/camenduru/stable-diffusion-webui-colab">stable-diffusion-webui-colab</a></li>
+<li><a href="https://blog.csdn.net/Eric_1993/article/details/129393890">Stable Diffusion 原理介绍与源码分析</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/570954565">使用Stable Diffusion UI手册</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/571808038">Stable Diffusion的十个脑洞</a></li>
+<li><a href="https://github.com/hpcaitech/ColossalAI">Colossal-AI</a></li>
+</ol>
+<hr />
+<h1 id="gpt-2">GPT-2</h1>
+<h2 id="场景分析-2">场景分析</h2>
+<blockquote>
+<p>用户层使用模式，最好能用开源的网站试试，了解输入状况，场景状态</p>
+</blockquote>
+<h3 id="应用场景-2">应用场景</h3>
+<h3 id="demo-2">demo</h3>
+<h3 id="推理硬件需求-2">推理硬件需求</h3>
+<h2 id="算子分析-2">算子分析</h2>
+<blockquote>
+<p>确认算子种类-频度</p>
+</blockquote>
+<h2 id="网络分析-2">网络分析</h2>
+<blockquote>
+<p>确认权重参数大小，网络结构，带宽-sram考量</p>
+</blockquote>
+<h2 id="部署-2">部署</h2>
+<blockquote>
+<p>量化细节，数据类型…</p>
+</blockquote>
+<ul>
+<li>框架</li>
+<li>硬件</li>
+</ul>
+<hr />
+</body>
+</html>
